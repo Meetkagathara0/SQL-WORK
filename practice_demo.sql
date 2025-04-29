@@ -171,7 +171,7 @@ EXEC sp_rename 'STUDENT.[ENO1]', 'ENO', 'COLUMN';
 
 ALTER TABLE Student DROP COLUMN City;
 
-sp_rename 'Student', 'Student_Master';
+EXEC sp_rename 'Student', 'Student_Master';
 
 ALTER TABLE Student_MASTER DROP COLUMN BACKLOG;
 
@@ -272,16 +272,40 @@ WHERE FirstName LIKE '__[^aeiouAEIOU]%';
 
 ---------------Math functions---------------
 
-SELECT (5*30);
+SELECT 5 * 30 AS result;
 
-SELECT ABS(-25);
-SELECT ABS(25);
-SELECT ABS(-50);
-SELECT ABS(50);
+SELECT ABS(-25) AS abs_neg25, ABS(25) AS abs_25, ABS(-50) AS abs_neg50, ABS(50) AS abs_50;
 
+SELECT CEILING(25.2) AS ceil_25_2, CEILING(25.7) AS ceil_25_7, CEILING(-25.2) AS ceil_neg25_2;
 
-SELECT CEILING(25.2);
-SELECT CEIL(25.2, 25.7, -25.2)
+SELECT FLOOR(25.2) AS floor_25_2, FLOOR(25.7) AS floor_25_7, FLOOR(-25.2) AS floor_neg25_2;
 
+SELECT 5 % 2 AS mod_5_2, 5 % 3 AS mod_5_3;
+
+SELECT POWER(3, 2) AS three_squared, POWER(4, 3) AS four_cubed;
+
+SELECT SQRT(25) AS sqrt_25, SQRT(30) AS sqrt_30, SQRT(50) AS sqrt_50;
+
+SELECT POWER(5, 2) AS square_5, POWER(15, 2) AS square_15, POWER(25, 2) AS square_25;
+
+SELECT PI() AS pi_value;
+
+SELECT 
+    ROUND(157.732, 2) AS round_2_dp,
+    ROUND(157.732, 0) AS round_0_dp,
+    ROUND(157.732, -2) AS round_minus_2_dp;
+
+SELECT EXP(2) AS exp_2, EXP(3) AS exp_3;
+
+SELECT LOG10(5) AS log10_5, LOG10(100) AS log10_100;
+
+SELECT 
+    SIN(3.1415) AS sin_val,
+    COS(3.1415) AS cos_val,
+    TAN(3.1415) AS tan_val;
+
+SELECT SIGN(-25) AS sign_neg25, SIGN(0) AS sign_0, SIGN(25) AS sign_25;
+
+SELECT RAND() AS random_number;
 
 
