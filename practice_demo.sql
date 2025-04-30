@@ -13,13 +13,13 @@ from student
 insert into student
 	(rollno,name)
 values
-	(1, 'dipuu'),
+	(1, 'abc'),
 	(2, 'meet');
 
 insert into student
 values
-	(3, 'dudu'),
-	(4, 'bubu');
+	(3, 'abc'),
+	(4, 'ccc');
 
 -- create table DEPOSIT
 -- (
@@ -384,17 +384,17 @@ SELECT
 	LEN('') AS Blank_Length;
 
 SELECT 
-	LOWER('DM KAGATHARA') as lower,
-	upper('dm kagathra') as upper;
+	LOWER('KAGATHARA') as lower,
+	upper('kagathra') as upper;
 
-SELECT SUBSTRING('DMkagtahra',1,3);
+SELECT SUBSTRING('kagtahra',1,3);
 
 SELECT LEFT(FirstName, 3) AS First_3_Chars
 FROM Students;
 
-SELECT LEFT('DMkagtahra', 3) AS First_3_Chars;
+SELECT LEFT('kagtahra', 3) AS First_3_Chars;
 
-SELECT SUBSTRING('DMkagtahra',3,10);
+SELECT SUBSTRING('kagtahra',3,10);
 
 SELECT 
 	REPLACE('abc123efg','abc123efg','abcXYZefg'),
@@ -416,16 +416,42 @@ SELECT
 	CHAR(48),
 	CHAR(57);
 
+SELECT TRIM('    hello     world     ');
+
+SELECT TRIM('hello world     ');
+SELECT LTRIM('   hello world   ') AS Left_Trimmed;
+SELECT RTRIM('   hello world  ') AS Right_Trimmed;
 
 
+SELECT LTRIM(RTRIM('    hello world     ')) AS Fully_Trimmed;
+
+SELECT ASCII(RIGHT('   hello world  ', 1)) AS LastCharCode;
 
 
+SELECT 
+	LEFT('SQL Server', 4) AS First_4_Chars,
+	RIGHT('SQL Server', 5) AS Last_5_Chars;
 
+SELECT CAST('1234.56' AS DECIMAL(12,4)) AS Converted_Number;
 
+SELECT CONVERT(INT, 11.58) AS Converted_Int;
 
+SELECT REPLICATE(' ', 10) + 'meet';
 
+SELECT ('Meet'+ ' ' +'kagathara');
 
+SELECT CONCAT('meet',' ','kagathara');
 
+SELECT REVERSE('darshan');
 
+SELECT REPLICATE('hello from SQL',3);
 
+select STUFF('abcde', 1, 3, 'HTML');
 
+SELECT COALESCE(NULL, NULL, '1st value','2nd value');
+
+SELECT ISNUMERIC('non');
+SELECT ISNUMERIC('123');
+SELECT ISNUMERIC(123.244);
+
+SELECT CHARINDEX('t','customer',1);
