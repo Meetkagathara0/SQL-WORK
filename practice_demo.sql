@@ -455,3 +455,121 @@ SELECT ISNUMERIC('123');
 SELECT ISNUMERIC(123.244);
 
 SELECT CHARINDEX('t','customer',1);
+
+
+----------------Date Functions--------------
+
+
+SELECT GETDATE() as column_Today_Date;
+
+SELECT DATEADD(DAY, 365, GETDATE());
+
+SELECT FORMAT(GETDATE(), 'MM dd yyyy hh:mmtt') AS Formatted_Full;
+
+SELECT FORMAT(GETDATE(), 'dd MMMM yyyy');
+
+SELECT FORMAT(GETDATE(), 'MMM dd, yy');
+
+SELECT DATEDIFF(MONTH, '2008-03-31', '2008-12-31');
+
+SELECT DATEDIFF(YEAR, '2010-09-14', '2012-1-25');
+
+SELECT DATEDIFF(HOUR, '2012-1-25 10:30', '2012-01-26 7:00');
+
+SELECT 
+	DAY('2016-05-12')   AS Extracted_Day,
+	MONTH('2016-05-12') AS Extracted_Month,
+	YEAR('2016-05-12')  AS Extracted_Year;
+
+SELECT 
+	DATEPART(DAY, '2016-05-12') AS Day_Part,
+	DATEPART(MONTH, '2016-05-12') AS Month_Part,
+	DATEPART(YEAR, '2016-05-12') AS Year_Part;
+
+SELECT DATEADD(YEAR, 5, GETDATE());
+
+SELECT DATEADD(MONTH, -2, GETDATE());
+
+SELECT DATENAME(MONTH,GETDATE());
+
+SELECT EOMONTH(GETDATE()) AS last_date_of_current_month;
+
+SELECT DATEDIFF(MONTH, '2005-06-13', GETDATE()) as Age_Month;
+
+SELECT DATEDIFF(YEAR, '2005-06-13', GETDATE())as Age_Year;
+
+
+
+------------------------------
+
+
+CREATE TABLE StudentMarks (
+	Sid INT NOT NULL,
+	SName VARCHAR(50) NOT NULL,
+	Marks INT NOT NULL
+);
+
+INSERT INTO StudentMarks (Sid, SName, Marks)
+VALUES 
+(1, 'John', 90),
+(2, 'Martin', 80),
+(3, 'Carol', 89),
+(4, 'Jack', 99),
+(5, 'Rose', 88),
+(6, 'Mary', 90);
+
+SELECT COUNT(*) AS Total_Students 
+FROM StudentMarks;
+
+SELECT SUM(Marks) AS Total_Marks 
+FROM StudentMarks;
+
+SELECT AVG(Marks) AS Average_Marks 
+FROM StudentMarks;
+
+SELECT MIN(Marks) AS Minimum_Marks 
+FROM StudentMarks;
+
+SELECT MAX(Marks) AS Maximum_Marks 
+FROM StudentMarks;
+
+CREATE TABLE Employee (
+	EID INT NOT NULL,
+	EName VARCHAR(50) NOT NULL,
+	Department VARCHAR(50) NOT NULL,
+	Salary DECIMAL(8,2) NOT NULL,
+	JoiningDate DATETIME NOT NULL,
+	City VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Employee (EID, EName, Department, Salary, JoiningDate, City)
+VALUES
+(101, 'Rahul', 'Admin', 56000, '1990-01-01', 'Rajkot'),
+(102, 'HarMAX()dik', 'IT', 18000, '1990-09-25', 'Ahmedabad'),
+(103, 'Bhavin', 'HR', 25000, '1991-05-14', 'Baroda'),
+(104, 'Bhoomi', 'Admin', 39000, '1991-02-08', 'Rajkot'),
+(105, 'Rohit', 'IT', 17000, '1990-07-23', 'Jamnagar'),
+(106, 'Priya', 'IT', 9000,  '1990-10-18', 'Ahmedabad'),
+(107, 'Neha', 'HR', 34000,  '1991-12-25', 'Rajkot');
+
+
+SELECT
+	MAX(Salary) as highest_salary,
+	MIN(Salary) as lowest_salary,
+	AVG(Salary) AS average_salary,
+	SUM(Salary) AS total
+FROM Employee;
+
+SELECT COUNT(*) FROM Employee;
+
+SELECT MAX(Salary) FROM Employee 
+WHERE Department = 'IT';
+
+SELECT COUNT(DISTINCT City) AS Unique_City_Count 
+FROM Employee;
+
+SELECT City, COUNT(*) AS Total_Employees
+FROM Employee
+GROUP BY City
+HAVING COUNT(*) > 1;
+
