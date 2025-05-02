@@ -573,3 +573,133 @@ FROM Employee
 GROUP BY City
 HAVING COUNT(*) > 1;
 
+SELECT Department, SUM(Salary) AS total_salary
+FROM Employee
+GROUP BY Department
+
+SELECT AVG(Salary) AS total_salary
+FROM Employee
+GROUP BY Department
+
+SELECT MIN(Salary) AS Min_Salary_Ahmedabad
+FROM Employee
+WHERE City = 'Ahmedabad';
+
+SELECT Department, SUM(Salary) AS Min_Salary_Ahmedabad
+FROM Employee
+WHERE City = 'rajkot'
+GROUP BY Department
+HAVING SUM(Salary) != 50000;
+
+SELECT COUNT(city) 
+FROM Employee 
+where City = 'rajkot'
+
+SELECT MAX(Salary) - MIN(Salary) AS SAL_DIFFERENCE
+FROM Employee;
+
+SELECT COUNT(EName)
+FROM Employee
+WHERE JoiningDate > '1991-01-01';
+
+SELECT Department, SUM(Salary) AS Total_Salary
+FROM Employee
+GROUP BY Department
+HAVING SUM(Salary) > 35000
+ORDER BY Total_Salary;
+
+select Department, COUNT(EName)
+FROM Employee
+GROUP BY Department
+HAVING COUNT(EName) > 2
+
+SELECT MIN(Salary) 
+FROM Employee 
+where City = 'rajkot'
+
+select Department, MIN(Salary)
+FROM Employee
+GROUP BY Department
+
+SELECT sum(Salary) AS total_salary
+FROM Employee
+GROUP BY City
+
+select Department,
+MIN(Salary) as MIN,
+MAX(Salary) as MAX,
+SUM(Salary) as SUM
+FROM Employee
+GROUP BY Department
+
+
+--------------SET Operators-----------------
+
+
+CREATE TABLE Computer (
+	RollNo INT,
+	Name VARCHAR(50)
+);
+
+CREATE TABLE Electrical (
+	RollNo INT,
+	Name VARCHAR(50)
+);
+
+INSERT INTO Computer (RollNo, Name)
+VALUES 
+(101, 'Ajay'),
+(109, 'Haresh'),
+(115, 'Manish');
+
+INSERT INTO Electrical (RollNo, Name)
+VALUES 
+(105, 'Ajay'),
+(107, 'Mahesh'),
+(115, 'Manish');
+
+SELECT Name FROM Computer
+UNION
+SELECT Name FROM Electrical
+
+SELECT Name FROM Computer
+UNION ALL
+SELECT Name FROM Electrical
+
+SELECT Name FROM Computer
+INTERSECT
+SELECT Name FROM Electrical;
+
+SELECT Name FROM Computer
+EXCEPT
+SELECT Name FROM Electrical;
+
+SELECT Name FROM Electrical
+EXCEPT
+SELECT Name FROM Computer;
+
+SELECT * FROM Computer
+UNION
+SELECT * FROM Electrical
+
+SELECT * FROM Computer
+UNION ALL
+SELECT * FROM Electrical
+
+
+
+-----------------Select Into ----------
+
+CREATE TABLE Cricket (
+	Name VARCHAR(50),
+	City VARCHAR(50),
+	Age INT
+);
+
+INSERT INTO Cricket (Name, City, Age)
+VALUES
+('Sachin Tendulkar', 'Mumbai', 30),
+('Rahul Dravid', 'Bombay', 35),
+('M. S. Dhoni', 'Jharkhand', 31),
+('Suresh Raina', 'Gujarat', 30);
+
