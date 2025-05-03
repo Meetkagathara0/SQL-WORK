@@ -703,3 +703,31 @@ VALUES
 ('M. S. Dhoni', 'Jharkhand', 31),
 ('Suresh Raina', 'Gujarat', 30);
 
+
+SELECT Name, City, Age 
+INTO  World_cup
+FROM Cricket
+
+SELECT Name, City
+INTO T20
+FROM Cricket
+WHERE 1 = 0;
+
+SELECT *
+INTO IPL
+FROM Cricket
+WHERE 1 = 0;
+
+INSERT INTO IPL (Name, City, Age)
+SELECT Name, City, Age
+FROM Cricket
+WHERE name LIKE'_a_____%';
+
+DELETE FROM IPL;
+
+DELETE FROM Cricket
+WHERE City = 'Jharkhand';
+
+EXEC sp_rename 'IPL', 'IPL2018';
+
+DROP TABLE T20;
