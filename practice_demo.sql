@@ -803,3 +803,97 @@ JOIN Result R ON S.Rno = R.Rno
 GROUP BY S.Branch
 ORDER BY Average_SPI ASC;
 
+SELECT S.Branch, AVG(R.SPI) AS Average_SPI
+FROM Student S 
+JOIN Result R ON S.Rno = R.Rno 
+GROUP BY S.Branch
+HAVING Branch = 'CE' OR Branch = 'ME';
+
+SELECT * 
+FROM Student S 
+LEFT JOIN Result R ON S.Rno = R.Rno
+
+SELECT * 
+FROM Student S 
+RIGHT JOIN Result R ON S.Rno = R.Rno
+
+SELECT *
+FROM Student S 
+FULL JOIN Result R ON S.Rno = R.Rno
+
+SELECT E1.Name AS Employee_Name, E2.Name AS Manager_Name
+FROM Employee E1
+LEFT JOIN Employee E2 ON E1.ManagerNo = E2.EmployeeNo;
+
+-- City table
+CREATE TABLE City (
+    CityID INT PRIMARY KEY,
+    CityName VARCHAR(50) UNIQUE,
+    Pincode VARCHAR(6),
+    Remarks VARCHAR(250)
+);
+
+-- Village table
+CREATE TABLE Village (
+    VillageID INT PRIMARY KEY,
+    VillageName VARCHAR(50),
+    CityID INT,
+    FOREIGN KEY (CityID) REFERENCES City(CityID)
+);
+INSERT INTO City (CityID, CityName, Pincode, Remarks) VALUES
+(1, 'Rajkot', '360005', 'Good'),
+(2, 'Surat', '335009', 'Very Good'),
+(3, 'Baroda', '390001', 'Awesome'),
+(4, 'Jamnagar', '361003', 'Smart'),
+(5, 'Junagadh', '362229', 'Historic'),
+(6, 'Morbi', '363641', 'Ceramic');
+
+INSERT INTO Village (VillageID, VillageName, CityID) VALUES
+(101, 'Raiya', 1),
+(102, 'Madhapar', 1),
+(103, 'Dodka', 3),
+(104, 'Falla', 4),
+(105, 'Bhesan', 5),
+(106, 'Dhoraji', 5);
+
+
+SELECT V.VillageID, V.VillageName
+FROM Village V
+JOIN City C ON V.CityID = C.CityID 
+WHERE CityName = 'RAJKOT'
+
+SELECT C.Pincode , V.VillageName , C.CityName
+FROM Village V
+JOIN City C ON V.CityID = C.CityID 
+
+SELECT 
+	City.CityName, 
+	COUNT(Village.VillageID) AS VillageCount
+FROM 
+	City
+JOIN 
+	Village ON City.CityID = Village.CityID
+GROUP BY 
+	City.CityName
+HAVING 
+	COUNT(Village.VillageID) > 1;
+
+SELECT C.CityName
+FROM City C
+LEFT JOIN Village V ON V.CityID = C.CityID 
+WHERE V.VillageName IS NULL
+
+SELECT C.CityName , COUNT(V.VillageName) AS VILLAGE_COUNT
+FROM City C
+LEFT JOIN Village V ON V.CityID = C.CityID
+GROUP BY C.CityName
+
+SELECT COUNT(*) AS CityCount
+FROM (
+    SELECT C.CityID
+    FROM City C
+    JOIN Village V ON C.CityID = V.CityID
+    GROUP BY C.CityID
+    HAVING COUNT(V.VillageID) > 1
+) AS MultiVillageCities;
+
