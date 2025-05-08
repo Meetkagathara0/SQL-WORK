@@ -533,7 +533,7 @@ FROM StudentMarks;
 SELECT MAX(Marks) AS Maximum_Marks 
 FROM StudentMarks;
 
-CREATE TABLE Employee (
+CREATE TABLE Employee1 (
 	EID INT NOT NULL,
 	EName VARCHAR(50) NOT NULL,
 	Department VARCHAR(50) NOT NULL,
@@ -542,7 +542,7 @@ CREATE TABLE Employee (
 	City VARCHAR(50) NOT NULL
 );
 
-INSERT INTO Employee (EID, EName, Department, Salary, JoiningDate, City)
+INSERT INTO Employee1 (EID, EName, Department, Salary, JoiningDate, City)
 VALUES
 (101, 'Rahul', 'Admin', 56000, '1990-01-01', 'Rajkot'),
 (102, 'HarMAX()dik', 'IT', 18000, '1990-09-25', 'Ahmedabad'),
@@ -558,78 +558,78 @@ SELECT
 	MIN(Salary) as lowest_salary,
 	AVG(Salary) AS average_salary,
 	SUM(Salary) AS total
-FROM Employee;
+FROM Employee1;
 
-SELECT COUNT(*) FROM Employee;
+SELECT COUNT(*) FROM Employee1;
 
-SELECT MAX(Salary) FROM Employee 
+SELECT MAX(Salary) FROM Employee1
 WHERE Department = 'IT';
 
 SELECT COUNT(DISTINCT City) AS Unique_City_Count 
-FROM Employee;
+FROM Employee1;
 
 SELECT City, COUNT(*) AS Total_Employees
-FROM Employee
+FROM Employee1
 GROUP BY City
 HAVING COUNT(*) > 1;
 
 SELECT Department, SUM(Salary) AS total_salary
-FROM Employee
+FROM Employee1
 GROUP BY Department
 
 SELECT AVG(Salary) AS total_salary
-FROM Employee
+FROM Employee1
 GROUP BY Department
 
 SELECT MIN(Salary) AS Min_Salary_Ahmedabad
-FROM Employee
+FROM Employee1
 WHERE City = 'Ahmedabad';
 
 SELECT Department, SUM(Salary) AS Min_Salary_Ahmedabad
-FROM Employee
+FROM Employee1
 WHERE City = 'rajkot'
 GROUP BY Department
 HAVING SUM(Salary) != 50000;
 
 SELECT COUNT(city) 
-FROM Employee 
+FROM Employee1 
 where City = 'rajkot'
 
 SELECT MAX(Salary) - MIN(Salary) AS SAL_DIFFERENCE
-FROM Employee;
+FROM Employee1;
 
 SELECT COUNT(EName)
-FROM Employee
+FROM Employee1
 WHERE JoiningDate > '1991-01-01';
 
 SELECT Department, SUM(Salary) AS Total_Salary
-FROM Employee
+FROM Employee1
 GROUP BY Department
 HAVING SUM(Salary) > 35000
 ORDER BY Total_Salary;
 
 select Department, COUNT(EName)
-FROM Employee
+FROM Employee1
 GROUP BY Department
 HAVING COUNT(EName) > 2
 
 SELECT MIN(Salary) 
-FROM Employee 
+FROM Employee1 
 where City = 'rajkot'
 
 select Department, MIN(Salary)
-FROM Employee
+FROM Employee1
 GROUP BY Department
 
 SELECT sum(Salary) AS total_salary
-FROM Employee
+FROM Employee1
 GROUP BY City
 
 select Department,
 MIN(Salary) as MIN,
 MAX(Salary) as MAX,
 SUM(Salary) as SUM
-FROM Employee
+FROM Employee1
 GROUP BY Department
 
 
@@ -731,9 +731,9 @@ WHERE City = 'Jharkhand';
 EXEC sp_rename 'IPL', 'IPL2018';
 
 DROP TABLE T20;
-use practice_demo
+-- Removed 'USE practice_demo' as it is not allowed in a procedure, function, or trigger.
 SELECT * FROM student
-CREATE TABLE Student (
+CREATE TABLE Student1 (
     Rno INT,
     Name VARCHAR(50),
     Branch VARCHAR(50)
@@ -748,7 +748,7 @@ INSERT INTO Student VALUES
 (106, 'Mahesh', 'ME');
 
 
-CREATE TABLE Result (
+CREATE TABLE Result1 (
     Rno INT,
     SPI DECIMAL(4,2)
 );
@@ -762,13 +762,13 @@ INSERT INTO Result VALUES
 (107, 8.9);
 
 
-CREATE TABLE Employee (
+CREATE TABLE Employee1 (
     EmployeeNo VARCHAR(50),
     Name VARCHAR(50),
     ManagerNo VARCHAR(50)
 );
 
-INSERT INTO Employee VALUES
+INSERT INTO Employee1 VALUES
 ('E01', 'Tarun', NULL),
 ('E02', 'Rohan', 'E02'),
 ('E03', 'Priya', 'E01'),
@@ -822,8 +822,8 @@ FROM Student S
 FULL JOIN Result R ON S.Rno = R.Rno
 
 SELECT E1.Name AS Employee_Name, E2.Name AS Manager_Name
-FROM Employee E1
-LEFT JOIN Employee E2 ON E1.ManagerNo = E2.EmployeeNo;
+FROM Employee1 E1
+LEFT JOIN Employee1 E2 ON E1.ManagerNo = E2.EmployeeNo;
 
 -- City table
 CREATE TABLE City (
@@ -897,3 +897,50 @@ FROM (
     HAVING COUNT(V.VillageID) > 1
 ) AS MultiVillageCities;
 
+CREATE TABLE Studentsp (
+    RNo INT,
+    Name VARCHAR(50),
+    Branch VARCHAR(50)
+);
+INSERT INTO Studentsp (RNo, Name, Branch) VALUES
+(101, 'Raju', 'CE'),
+(102, 'Amit', 'CE'),
+(103, 'Sanjay', 'ME'),
+(104, 'Neha', 'EC'),
+(105, 'Meera', 'EE'),
+(106, 'Mahesh', 'ME');
+
+CREATE TABLE Resultsp (
+    RNo INT,
+    SPI DECIMAL(4,2)
+);
+INSERT INTO Result (RNo, SPI) VALUES
+(101, 8.8),
+(102, 9.2),
+(103, 7.6),
+(104, 8.2),
+(105, 7.0),
+(107, 8.9);
+
+IF OBJECT_ID('GetAllStudentRecords', 'P') IS NOT NULL
+	DROP PROCEDURE GetAllStudentRecords;
+GO
+
+CREATE PROCEDURE GetAllStudentRecords
+AS
+BEGIN
+	SELECT S.RNo, S.Name, S.Branch, R.SPI
+	FROM Student S
+	LEFT JOIN Result R ON S.RNo = R.RNo;
+END;
+GO
+
+EXEC GetAllStudentRecords;
+
+
+
+
+
+
+
+use practice_demo
