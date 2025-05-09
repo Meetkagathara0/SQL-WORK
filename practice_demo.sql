@@ -922,10 +922,6 @@ INSERT INTO Result (RNo, SPI) VALUES
 (105, 7.0),
 (107, 8.9);
 
-IF OBJECT_ID('GetAllStudentRecords', 'P') IS NOT NULL
-	DROP PROCEDURE GetAllStudentRecords;
-GO
-
 CREATE PROCEDURE GetAllStudentRecords
 AS
 BEGIN
@@ -937,10 +933,53 @@ GO
 
 EXEC GetAllStudentRecords;
 
+ALTER PROCEDURE StudentInfo_sp
+	@rollno int
+AS 
+BEGIN
+	SELECT * 
+	FROM Studentsp S
+	LEFT JOIN Resultsp R ON s.Rno = r.Rno
+	WHERE s.Rno = @rollno;
+END;
+
+EXEC StudentInfo_sp 101;
+
+CREATE PROCEDURE InsertStudentRecord
+    @Rno INT,
+    @Name VARCHAR(50),
+    @Branch VARCHAR(50)
+AS
+BEGIN
+    INSERT INTO Student (RNo, Name, Branch)
+    VALUES (@Rno, @Name, @Branch);
+    
+    PRINT 'Student record inserted successfully.';
+END;
+
+EXEC InsertStudentRecord 107, 'Raj', 'EE';
 
 
+create procedure update_sp
+	@Branch varchar(50)
+AS
+BEGIN
+	UPDATE Student
+	SET BRANCH = @Branch
+END;
 
+EXEC update_sp 'EC'
 
+create procedure delete_sp
+	@rollno int
+AS
+BEGIN
+	DELETE FROM student
+	where @rollno = Rno;
+END;
 
+EXEC delete_sp 103
+
+select * from student
 
 use practice_demo
