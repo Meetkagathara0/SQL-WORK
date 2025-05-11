@@ -982,4 +982,68 @@ EXEC delete_sp 103
 
 select * from student
 
+
+------------------VIEW-----------
+
+CREATE TABLE Student (
+    RNo INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Branch VARCHAR(50),
+    SPI DECIMAL(4,2),
+    Bklog INT
+);
+
+INSERT INTO Student (RNo, Name, Branch, SPI, Bklog) VALUES
+(101, 'Raju', 'CE', 8.80, 0),
+(102, 'Amit', 'CE', 2.20, 3),
+(103, 'Sanjay', 'ME', 1.50, 6),
+(104, 'Neha', 'EC', 7.65, 1),
+(105, 'Meera', 'EE', 5.52, 2),
+(106, 'Mahesh', 'EC', 4.50, 3);
+
+CREATE VIEW Personal AS
+SELECT * FROM student 
+
+SELECT * FROM Personal
+
+CREATE VIEW  Student_Details AS 
+SELECT NAME, BRANCH, SPI FROM STUDENT;
+
+SELECT * FROM  Student_Details
+
+CREATE VIEW   Academic AS 
+SELECT RNo, Name, Branch FROM STUDENT;
+SELECT * FROM Academic
+
+CREATE VIEW   Student_Data AS 
+SELECT * FROM STUDENT
+WHERE Bklog > 2;
+
+SELECT * FROM Student_Data
+
+CREATE VIEW Student_Pattern AS 
+SELECT RNo, Name, Branch FROM STUDENT
+WHERE NAME LIKE '____';
+
+SELECT * FROM Student_Pattern
+
+INSERT INTO  Academic
+VALUES (107, 'MEET', 'ME')
+
+
+UPDATE Student_Details 
+SET BRANCH = 'ME'
+WHERE NAME = 'AMIT' 
+
+DELETE FROM Academic
+WHERE RNo = 104;
+
+CREATE VIEW   Bklog AS 
+SELECT * FROM STUDENT
+WHERE Bklog = 0;
+
+SELECT * FROM Bklog
+
+
+
 use practice_demo
