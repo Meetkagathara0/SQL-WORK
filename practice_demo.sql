@@ -1104,14 +1104,191 @@ FROM Sales;
 
 SELECT CURDATE();  -- 2025-05-12
 
+--=======================Joins SEM - 4 LAB =========-----------
+
+CREATE TABLE Department (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(100) NOT NULL UNIQUE,
+    DepartmentCode VARCHAR(50) NOT NULL UNIQUE,
+    Location VARCHAR(50) NOT NULL
+);
+INSERT INTO Department (DepartmentID, DepartmentName, DepartmentCode, Location) VALUES
+(1, 'Admin', 'Adm', 'A-Block'),
+(2, 'Computer', 'CE', 'C-Block'),
+(3, 'Civil', 'CI', 'G-Block'),
+(4, 'Electrical', 'EE', 'E-Block'),
+(5, 'Mechanical', 'ME', 'B-Block');
 
 
+CREATE TABLE Person (
+    PersonID INT PRIMARY KEY,
+    PersonName VARCHAR(100) NOT NULL,
+    DepartmentID INT NULL,
+    Salary DECIMAL(8,2) NOT NULL,
+    JoiningDate DATETIME NOT NULL,
+    City VARCHAR(100) NOT NULL,
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
+INSERT INTO Person (PersonID, PersonName, DepartmentID, Salary, JoiningDate, City) VALUES
+(101, 'Rahul Tripathi', 2, 56000, '2000-01-01', 'Rajkot'),
+(102, 'Hardik Pandya', 3, 18000, '2001-09-25', 'Ahmedabad'),
+(103, 'Bhavin Kanani', 4, 25000, '2000-05-14', 'Baroda'),
+(104, 'Bhoomi Vaishnav', 1, 39000, '2005-02-08', 'Rajkot'),
+(105, 'Rohit Topiya', 2, 17000, '2001-07-23', 'Jamnagar'),
+(106, 'Priya Menpara', NULL, 9000, '2000-10-18', 'Ahmedabad'),
+(107, 'Neha Sharma', 2, 34000, '2002-12-25', 'Rajkot'),
+(108, 'Nayan Goswami', 3, 25000, '2001-07-01', 'Rajkot'),
+(109, 'Mehul Bhundiya', 4, 13500, '2005-01-09', 'Baroda'),
+(110, 'Mohit Maru', 5, 14000, '2000-05-25', 'Jamnagar');
+
+-------
+
+SELECT 
+    P.PersonID,
+    P.PersonName,
+    D.DepartmentName,
+    D.DepartmentCode
+FROM 
+    Person P
+LEFT JOIN 
+    Department D ON P.DepartmentID = D.DepartmentID;
 
 
+SELECT 
+    P.PersonName
+FROM 
+    Person P
+JOIN 
+    Department D ON P.DepartmentID = D.DepartmentID
+WHERE D.Location = 'C-Block ';
 
 
+SELECT P.PersonName, P.Salary, D.DepartmentName
+FROM Person P 
+JOIN Department D ON P.DepartmentID = D.DepartmentID
+WHERE P.CITY = 'JAMNAGAR'
+
+SELECT * 
+FROM PERSON P 
+JOIN Department D ON P.DepartmentID = D.DepartmentID
+WHERE D.DepartmentName = 'COMPUTER'
+
+SELECT *
+FROM PERSON P 
+LEFT JOIN Department D ON P.DepartmentID = D.DepartmentID
+WHERE P.DepartmentID IS NULL;
 
 
+SELECT * 
+FROM PERSON P 
+LEFT JOIN Department D ON P.DepartmentID = D.DepartmentID
+WHERE D.DepartmentName = 'Civil' AND P.JoiningDate > '2001-08-1'
+
+
+SELECT * 
+FROM PERSON P 
+JOIN Department D ON P.DepartmentID = D.DepartmentID
+WHERE DATEDIFF(DAY , P.JoiningDate , GETDATE()) > 365;
+
+
+SELECT COUNT(D.DepartmentName) , D.DepartmentName
+FROM PERSON P 
+JOIN Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY D.DepartmentName
+
+SELECT
+	D.DepartmentName, MAX(P.Salary) AS MAX , MIN(P.Salary)AS MIN
+FROM
+	PERSON P 
+JOIN
+	Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY D.DepartmentName
+
+SELECT
+	P.CITY, MAX(P.Salary) AS MAX , MIN(P.Salary)AS MIN, AVG(P.Salary) AS AVG
+FROM
+	PERSON P 
+JOIN
+	Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY P.CITY
+
+
+SELECT
+	D.DepartmentName, SUM(P.Salary) AS TOTAL 
+FROM
+	PERSON P 
+JOIN
+	Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY D.DepartmentName
+HAVING SUM(P.Salary) > 100000
+
+
+SELECT
+	P.CITY, AVG(P.Salary) AS AVG
+FROM
+	PERSON P 
+JOIN
+	Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY P.CITY
+HAVING P.CITY = 'Ahmedabad'
+
+SELECT 
+    D.DepartmentID,
+    D.DepartmentName,
+    D.DepartmentCode,
+    D.Location
+FROM 
+    Department D
+LEFT JOIN 
+    Person P ON D.DepartmentID = P.DepartmentID
+WHERE 
+    P.PersonID IS NULL;
+
+
+SELECT COUNT(D.DepartmentName) , D.DepartmentName
+FROM PERSON P 
+JOIN Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY D.DepartmentName
+HAVING COUNT(D.DepartmentName) > 2
+
+SELECT 
+    CONCAT(P.PersonName, ' lives in ', P.City, ' and works in ', D.DepartmentName, ' Department.') AS Details
+FROM 
+    Person P
+LEFT JOIN 
+    Department D ON P.DepartmentID = D.DepartmentID;
+
+
+SELECT 
+	CONCAT(P.PersonName, ' earns ', P.Salary, ' from department ', D.DepartmentName,'  Department.')
+FROM
+	PERSON P
+LEFT JOIN
+	Department D ON P.DepartmentID = D.DepartmentID
+
+
+SELECT 
+    P.City,
+    D.DepartmentName,
+    COUNT(P.PersonID) AS Total_Persons,
+    SUM(P.Salary) AS Total_Salary,
+    AVG(P.Salary) AS Average_Salary,
+    MAX(P.Salary) AS Max_Salary
+FROM 
+    Person P
+LEFT JOIN 
+    Department D ON P.DepartmentID = D.DepartmentID
+GROUP BY 
+    P.City, D.DepartmentName
+ORDER BY 
+    P.City, D.DepartmentName;
+
+
+UPDATE Person
+SET Salary = Salary * 1.10
+FROM Person P
+JOIN Department D ON P.DepartmentID = D.DepartmentID
+WHERE D.DepartmentName = 'Computer';
 
 
 
