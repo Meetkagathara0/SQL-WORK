@@ -1526,8 +1526,17 @@ END
 EXEC SIX_SP
 
 
+select * from customers
 
+SELECT * FROM result
 
+SELECT top 5 * FROM result
+LIMIT 5;
+
+SELECT * FROM result
+ORDER BY Rno
+OFFSET 1 ROWS
+FETCH NEXT 5 ROWS ONLY;
 
 
 use practice_demo
